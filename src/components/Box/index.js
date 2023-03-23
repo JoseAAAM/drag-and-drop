@@ -10,11 +10,9 @@ export default function Box({ children, gridArea, id }) {
 
   const { move, positions } = useContext(AreasContext)
 
-  console.log(positions)
-
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: 'BOX',
-    item: { gridArea, id },
+    item: { id },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
     })
@@ -24,17 +22,36 @@ export default function Box({ children, gridArea, id }) {
     accept: 'BOX',
     hover: (item, monitor) => {
       const targetId = id
-      const targetArea = gridArea
+      const targetArea = positions[id]
 
-      const draggedArea = item.gridArea
+      const draggedArea = positions[item.id]
       const draggedId = item.id
 
       if (draggedArea === targetArea) return
 
+      const targetSize = ref.current.getBoundingClientRect()
+      const targetCenterY = (targetSize.bottom - targetSize.top) / 2
+      const targetCenterX = (targetSize.right - targetSize.left) / 2
+
+      const draggedOffset = monitor.getClientOffset()
+      const draggedRight = Math.abs(draggedOffset.x - targetSize.right)
+      const draggedLeft = Math.abs(draggedOffset.x - targetSize.left)
+      const draggedTop = Math.abs(draggedOffset.y - targetSize.top)
+      const draggedBottom = Math.abs(draggedOffset.y - targetSize.bottom)
+
+      if (
+        targetCenterY * 0.25 > draggedTop ||
+        targetCenterY * 0.25 > draggedBottom
+      )
+        return
+
+      if (
+        targetCenterX * 0.25 > draggedRight ||
+        targetCenterX * 0.25 > draggedLeft
+      )
+        return
+
       move(draggedArea, draggedId, targetArea, targetId)
-    },
-    drop: (item) => {
-      item.gridArea = gridArea
     }
   })
 
