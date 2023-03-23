@@ -23,18 +23,18 @@ export default function Grid() {
   }
 
   return (
-    <AreasContext.Provider value={{ move, positions }}>
+    <AreasContext.Provider value={{ move }}>
       <Container>
-        <Box gridArea={positions.area1} id="area1">
+        <Box id="area1" positions={positions}>
           AREA 1
         </Box>
-        <Box gridArea={positions.area2} id="area2">
+        <Box id="area2" positions={positions}>
           AREA 2
         </Box>
-        <Box gridArea={positions.area3} id="area3">
+        <Box id="area3" positions={positions}>
           AREA 3
         </Box>
-        <Box gridArea={positions.area4} id="area4">
+        <Box id="area4" positions={positions}>
           AREA 4
         </Box>
       </Container>

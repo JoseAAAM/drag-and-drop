@@ -5,10 +5,10 @@ import AreasContext from '../Grid/context'
 
 import { Container } from './styles'
 
-export default function Box({ children, gridArea, id }) {
+export default function Box({ children, positions, id }) {
   const ref = useRef()
 
-  const { move, positions } = useContext(AreasContext)
+  const { move } = useContext(AreasContext)
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: 'BOX',
@@ -58,7 +58,11 @@ export default function Box({ children, gridArea, id }) {
   dragRef(dropRef(ref))
 
   return (
-    <Container ref={ref} isDragging={isDragging} style={{ gridArea: gridArea }}>
+    <Container
+      ref={ref}
+      isDragging={isDragging}
+      style={{ gridArea: positions[id] }}
+    >
       {children}
     </Container>
   )
