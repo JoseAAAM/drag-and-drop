@@ -5,6 +5,7 @@ import AreasContext from './context'
 import { Container } from './styles'
 
 import Box from '../Box'
+import Area from '../Area'
 
 export default function Grid() {
   const [positions, setPositions] = useState({
@@ -25,7 +26,19 @@ export default function Grid() {
   return (
     <AreasContext.Provider value={{ move }}>
       <Container>
-        <Box id="area1" positions={positions}>
+        <Area gridArea="a">
+          <Box id="area1" positions={positions}>
+            AREA 1
+          </Box>
+        </Area>
+        <Area gridArea="b">
+          <Box id="area2" positions={positions}>
+            AREA 2
+          </Box>
+        </Area>
+        <Area gridArea="c"></Area>
+        <Area gridArea="d"></Area>
+        {/* <Box id="area1" positions={positions}>
           AREA 1
         </Box>
         <Box id="area2" positions={positions}>
@@ -36,7 +49,7 @@ export default function Grid() {
         </Box>
         <Box id="area4" positions={positions}>
           AREA 4
-        </Box>
+        </Box> */}
       </Container>
     </AreasContext.Provider>
   )
